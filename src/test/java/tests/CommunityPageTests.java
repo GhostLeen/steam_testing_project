@@ -14,12 +14,6 @@ import static com.codeborne.selenide.Selenide.*;
 import static io.qameta.allure.Allure.step;
 
 public class CommunityPageTests extends TestBase {
-
-    @BeforeEach
-    void openSteamCommunityPage() {
-        open("https://steamcommunity.com/");
-    }
-
     @ParameterizedTest(name = "Check if header name {1} in locale {0}")
     @CsvSource(value = {
             "Русский (Russian), Активность сообщества",
@@ -28,6 +22,8 @@ public class CommunityPageTests extends TestBase {
     })
     @Tag("UI_tests")
     void languageChangeTest(String language, String expectedHeader) {
+        step("Open main Steam community page", () ->
+                open("https://steamcommunity.com/"));
         step("Choose language " + language, () -> {
             $("#language_pulldown").click();
             $("#language_dropdown").find(byText((language))).click();
@@ -35,7 +31,6 @@ public class CommunityPageTests extends TestBase {
         step("Check presence of header" + expectedHeader, () -> {
             $(".community_home_title").shouldHave(text(expectedHeader));
         });
-//        sleep(3000);
     }
 
 
@@ -43,6 +38,8 @@ public class CommunityPageTests extends TestBase {
     @Tag("UI_tests")
     @DisplayName("Checking transition to the Store main page by clicking logo Steam")
     void moveToStorePageByLogoButtonTest() {
+        step("Open main Steam community page", () ->
+                open("https://steamcommunity.com/"));
         step("Click on logo Steam", () -> $(".logo").click());
         step("Check if 'Your Store' section presents", () -> {
             $(".pulldown_desktop").shouldHave(text("Your Store"));
@@ -54,6 +51,8 @@ public class CommunityPageTests extends TestBase {
     @DisplayName("Checking open 'Discussions' page from drop-down Community menu")
     void discussionOpenPageTest() {
         step("Click on 'Discussion' section", () -> {
+            step("Open main Steam community page", () ->
+                    open("https://steamcommunity.com/"));
             $(".supernav_container").find(byText(("COMMUNITY"))).hover();
             $(".supernav_content").find(byText(("Discussions"))).click();
         });

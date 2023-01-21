@@ -12,16 +12,12 @@ import static com.codeborne.selenide.Selenide.open;
 import static io.qameta.allure.Allure.step;
 
 public class StorePageTests extends TestBase {
-
-    @BeforeEach
-    void openSteamCommunityPage() {
-        open("https://store.steampowered.com/");
-    }
-
     @Test
     @Tag("UI_tests")
     @DisplayName("Checking displaying of top and sidebar sections on main Store page")
     void sectionDisplayOnStorePageTest() {
+        step("Open main Steam community page", () ->
+                open("https://store.steampowered.com/"));
         step("Check top sections", () -> {
             $(".store_nav").shouldHave(text("Your Store"), text("New & Noteworthy"),
                     text("Categories"), text("Points Shop"), text("News"), text("Labs"));
@@ -36,10 +32,12 @@ public class StorePageTests extends TestBase {
     @Tag("UI_tests")
     @DisplayName("Adding game to the cart checking")
     void searchFieldTest() {
+        step("Open main Steam community page", () ->
+                open("https://store.steampowered.com/"));
         step("Find game by search field", () -> {
             $("#store_nav_search_term").setValue("Stray").pressEnter();
         });
-        step("Click on first game", () -> {
+        step("Click on game with name 'Stray'", () -> {
             $(".responsive_search_name_combined").find(byText("Stray")).click();
         });
         step("Add to cart", () -> {
