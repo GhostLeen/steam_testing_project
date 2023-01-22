@@ -31,7 +31,7 @@ public class StorePageTests extends TestBase {
     @Test
     @Tag("UI_tests")
     @DisplayName("Adding game to the cart checking")
-    void searchFieldTest() {
+    void addToCartTest() {
         step("Open main Steam community page", () ->
                 open("https://store.steampowered.com/"));
         step("Find game by search field", () -> {
